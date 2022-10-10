@@ -1,19 +1,27 @@
+#define _CRT_SECURE_NO_WARNINGS
 #pragma once
 #include <iostream>
+#include <ctime>
 
-class Messages
+class Dialog
 {
 public:
-	struct TextTime { std::string text_; int hours_; int min_; };
+	struct Message { std::string text_; std::string from_; tm timeinfo; };
 private:
-	std::string from_;
-	TextTime* pdialog_ = nullptr;
+	std::string nameCompanion_;
+	Message* messages_ = nullptr;
+	unsigned int countMessages_;
 public:
-	Messages() = default;
-	Messages(const TextTime dialog, const std::string& from);
-	const std::string& getFrom() const;
-	void showDialog() const;
-	void editText();
-	void deleteMessage();
-	~Messages();
+	Dialog();
+	Dialog(const Message, const std::string nameCompanion = "all");
+	Dialog(Dialog&);
+	const std::string getNameCompanion() const;
+	void setNameCompanion(const std::string);
+	const Message& operator[](int) const;
+	const int getCountMessages() const;
+	void addMessage(Message&);
+	void showHistoryMessages() const;
+
+	Dialog& operator=(const Dialog&);
+	~Dialog();
 };
